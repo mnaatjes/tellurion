@@ -26,6 +26,7 @@ for docs in reader.iter_data():
 
 ```
 
+
 ```mermaid
 classDiagram
     class ReaderContract {
@@ -46,15 +47,16 @@ LlamaIndex has multiple methods depending on the content type. This MUST be dete
 [LllamaIntex Parsers](https://developers.llamaindex.ai/python/framework/module_guides/loading/node_parsers/modules/)
 
 ### 2.1 Common Args
-* `include_metadata` - Whether to include document metadata in the resulting nodes.
-* `include_prev_next_rel` - Whether to include relationships between sequential nodes (linking a node to its predecessor and successor)
-* `callback_manager` - Used for tracing and logging events durring process
+* `include_metadata` [Global/Instance] - Whether to include document metadata in the resulting nodes.
+* `include_prev_next_rel` [Global/Instance] - Whether to include relationships between sequential nodes (linking a node to its predecessor and successor)
+* `callback_manager` [Global] - Used for tracing and logging events durring process
 
 ### 2.2 Text-Based Common Args
-* `chunk_size` - The maximum size of each chunk (measured in tokens or characters depending on the parser).
-* `chunk_overlap` - The amount of text to repeat between consecutive chunks to maintain context.
-* `separator` - (delimiter) The character or string used to identify where splits can occur (common in TokenTextSplitter and SentenceSplitter).
-* `embed_model` - represents the specific software engine that takes human-readable text and turns it into a list of numbers (a vector)
+* `chunk_size` [Global] - The maximum size of each chunk (measured in tokens or characters depending on the parser).
+* `chunk_overlap` [Global] - The amount of text to repeat between consecutive chunks to maintain context.
+* `separator` [Instance] - (delimiter) The character or string used to identify where splits can occur (common in TokenTextSplitter and SentenceSplitter).
+* `embed_model` [Global] - represents the specific software engine that takes human-readable text and turns it into a list of numbers (a vector)
+* `breakpoint_percentile_threshold` & `buffer_size` [Instance] - Highly specific to the "Semantic" logic
 
 ```mermaid
 classDiagram
