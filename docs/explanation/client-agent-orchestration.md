@@ -1,4 +1,4 @@
-# Design Prototype: Client Agent Orchestrator (CAO)
+# Client Agent Orchestrator (CAO)
 
 The **Client Agent Orchestrator (CAO)**—pronounced "kay-oh"—acts as the "General Manager" of the AI department. While the **Instance-Based Manager** handles the technical plumbing (process spawning, tmux management), the CAO governs the high-level logic, inter-agent communication, and strategic planning.
 

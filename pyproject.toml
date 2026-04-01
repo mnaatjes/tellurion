@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agents"
+version = "0.1.0"
+description = "A LlamaIndex-based agent orchestration project"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "llama-index-core",
+    "llama-index-readers-file",
+    "llama-index-embeddings-google",
+    "llama-index-vector-stores-chroma",
+    "pytest",
+    "httpx",
+    "rich",
+]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q --doctest-modules"
+testpaths = [
+    "tests",
+]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
