@@ -3,7 +3,8 @@ llama-index-core
 llama-index-readers-file
 llama-index-embeddings-google
 llama-index-vector-stores-chroma
-
+llama-index-embeddings-google-genai
+llama-index-llms-google-genai
 # pytest
 pytest
 httpx

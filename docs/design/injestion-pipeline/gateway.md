@@ -76,10 +76,11 @@ def register_defaults(container):
 * **`addReader()`** [Optional] - 
 * **`addEmbedder()`** [Optional] - 
 * **`addStorage()`** - [Required] Storage Context [sink]: Vector DB or a SimpleStore (local filesystem)
+* **`addEnrichment()`** - 
 * **`setup()`** [Required] - 
 
 
-Use
+Use Case:
 
 ```py
 # Adding a source to the pipeline
@@ -93,9 +94,10 @@ pipeline.build() \
 
 **Methods**:
 * **`register()`**
-    * `.parser()`
-    * `.embedder()`
-    * `.reader()`
+    * `.parser()` - 
+    * `.embedder()` - 
+    * `.reader()` - 
+    * `.enrichment()`
 
 ```py
 pipeline.register.parser("AdvancedSplitter", AdvancedSplitter())
