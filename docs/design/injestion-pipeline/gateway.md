@@ -1,122 +1,170 @@
 # Ingestion Pipeline Domain-Library Gateway
 
+## 1. Overview
+
 * **Domain Library**: Standalone packages unaware parent 'App' exists
 
 `pipeline = IngestionPipeline()` - Gateway for Ingestion Pipeline Domain Library
 
-* **Ingestion Flow**:
-1. Ingestion Pipeline Initialization
-    * User can use `pipeline.available.x()` to access available embedders, etc
-2. Execute Builder DSL
-    * `pipeline.build()...`
-    * `.addSource()` [Required]
-    * `addStorage()` [Required]
-    * [Optional] User can add embedders, parsers, readers
+---
 
-## 1.0 Dependencies
+### 1.1 LlamaIndex Linear Progression
 
-### 1.0.1 `Bootstrap()`
-
-**Class Properties**
-* **`ServiceProvider(ABC)`** - 
-* **`ServiceContainer`** - See below
-
-**Notes**:
-
-* Implement *Late Binding* approach where Service-Providers registers the *Potential* to create an object but only instantiates it if the user doesn't provide an override
-
-```py
-# Inside your Bootstrap / ServiceProvider
-def register_defaults(container):
-    # Registering a "Factory" or "Provider", not an instance
-    container.register("READER:LOCAL", lambda: SimpleDirectoryReader())
-    container.register("PARSER:SENTENCE", lambda: SentenceSplitter(chunk_size=1024))
-
-    # TODO: Figure out how Bootstrapped settings like chunk_size=1024 above are added via a similar mechanism to the later Blueprints which will be utilized for communication between various pipeline.addX() methods
-```
-
-**Methods**
-* **`register()`** - 
-* **`boot()`** - 
+1. Configure - Assigns BaseEmbedding with `Settings.embed_mode = OpenAIEmbedding()` 
+2. Assign Reader Instance `reader = SimpleDirectoryReader()`
+3. Read Content - `documents = reader.load_data()`
+4. Parse - `nodes = get_nodes_from_documents(documents)`
+5. Enrich / Extract Metadata - `TitleExtractor()`, `SummaryExtractor()`, etc.
+6. Embed - Vectorize Nodes `get_text_embedding()`
+7. Index - Build the Search Index `VectorStoreIndex(...)`
+8. Persist - Save to Disk/DB `index.storage_context.persist()`
 
 ---
 
-### 1.0.2 `ServiceContainer()`
+### 1.2 Pipeline Progression
 
-**Properties**:
-* **`registry`** [Dict [instanceName|Instance]] - 
+#### 1.2.1 Fascade Initialization
 
-**Methods**:
-* **`register()`** - 
-* **`get()`** - 
-
----
-
-### 1.0.3 `Builder()`
-
-**Requirements**:
-1. **Input Configuration**
-    * `input_dir` | `input_files` [str|list]
-    * `file_extractor` [Strategy] Mapping specific file exensions to specific parsers (`StrategyResolver()` Service)
-2. **Transformation Configuration**
-    * `chunk_size` [int] Default 1024
-    * `include_metadata` [bool] Default False
-3. **Model Configuration**
-    * `embed_model` [BaseEmbedding] See `builder().addEmbedder()`
-4. **Metadata** [Optional]
-    * `extra_info` - Custom Tags
-
-**Properties**
-* **`global`** - `Settings()` Instance used to define global settings of Pipeline Instance
-
-**Methods**:
-* **`build()`** [Required] - Access to the Builder() instance
-* **`addSource()`** [Required] - 
-* **`addParser()`** [Optional] - 
-* **`addReader()`** [Optional] - 
-* **`addEmbedder()`** [Optional] - 
-* **`addStorage()`** - [Required] Storage Context [sink]: Vector DB or a SimpleStore (local filesystem)
-* **`addEnrichment()`** - 
-* **`setup()`** [Required] - 
-
-
-Use Case:
+1. Call the fascade/entry-point
+2. Initialize
 
 ```py
-# Adding a source to the pipeline
+from src.app import IngestionPipeline
 pipeline = IngestionPipeline()
+```
+
+#### 1.2.2 Build Process
+
+1. Check available resources:
+
+```py
+pipeline.available.parsers # Returns list of available Parsers
+pipeline.available.embedders # Returns list of available Embedders
+```
+
+2. Call Builder and assign properties:
+
+```py
+# Calling builder DSL
 pipeline.build() \
-    .addSource(type:str, uri:Optional[str], bucket:Optional[str])
+    .addParser("sentance_splitter") \
+    .addLLM("google_flash", api_key="asd33d-sfhsdhfjhwp323s") \
+    .addEmbedder("google", model_name="model/gemini-embedding-2-preview") \
+    .addReader("some-reader") \
+    .addSource("path/to/dir") \
+    .addSource("path/to/other/dir")
 ```
----
 
-### 1.0.4 `Registry()`
+3. Builder assembles blueprints and final `PipelineBlueprint` DTO
 
-**Methods**:
-* **`register()`**
-    * `.parser()` - 
-    * `.embedder()` - 
-    * `.reader()` - 
-    * `.enrichment()`
+```mermaid
+graph TD
+    subgraph "App Facade Layer"
+        A[App Facade]
+        B[PipelineBuilder DSL]
+    end
+
+    subgraph "Core Storage (Read-Only)"
+        C[RegistryCollection]
+        D[(LLMRegistry)]
+        E[(EmbedRegistry)]
+        F[(ParserRegistry)]
+    end
+
+    subgraph "Output DTO"
+        G[PipelineBlueprint]
+    end
+
+    %% Initialization
+    A --> B
+    A --> C
+    
+    %% Relationships
+    C --- D
+    C --- E
+    C --- F
+
+    %% Method Calls / Lookups
+    B -- "addLLM(alias)" --> D
+    B -- "addEmbedder(alias)" --> E
+    B -- "addParser(alias)" --> F
+
+    %% Data Flow (Cloning)
+    D -- "LLMBlueprint" --> B
+    E -- "EmbedModelBlueprint" --> B
+    F -- "ParserBlueprint" --> B
+
+    %% Final Assembly
+    B --> G
+```
+
+## 2.1 Dependencies
+
+**Initialized Properties**
+* **`self._container`** [ServiceContainer] - Main Service Container
+* **`self._catalogs`** [CatalogCollection] - Represents the interface with the Catalogs
+
+**@Properties**
+* **`available`** - Facilitates access to `CatalogCollection`
+* **`build`** - Returns new `Builder(self._catalog)` instance
+
+### 2.1.1 Catalog Collection
+
+* **Property**: `self._catalogs`
+* **Fascade**: `available`
+
+**Conceptual Logic Flow**:
+1. **Selection** - `app.pipeline.build().addLLM()` Builder checks Catalog if `llm` exists
+2. **Assembly** - `.addLLM()` uses `Catalog` to search `Registry` for `llm` param and produces properties to generate `LLMBlueprint`
+
+```mermaid
+graph TD
+    subgraph "The App Facade (Core)"
+        A[App Facade] --> SC[ServiceContainer]
+        A --> B[CatalogCollection]
+        A --> H[PipelineBuilder]
+    end
+
+    subgraph "Runtime Process (User Selection)"
+        B -- "Reads" --> E[(LLMRegistry)]
+        B -- "Informs" --> H
+        H -- "Produces" --> I[PipelineBlueprint DTO]
+    end
+```
+
+**Implementation**
 
 ```py
-pipeline.register.parser("AdvancedSplitter", AdvancedSplitter())
+    # In App/Facade class
+    def __init__(self, service_container:ServiceContainer, **kwargs):
+        self._container = service_container
+        self._catalogs = CatalogCollection(
+            collection=self.container.get(RegistryCollection)
+        )
+
+    @property
+    def available(self):
+        # Returns a small helper that points to the registries
+        # Returned Catalog is readonly
+        return self._catalogs
+
+    @property
+    def build(self):
+        # Returns new builder instance
+        return Builder(self._catalogs)
+
+# CatalogCollection handles the namespaces
+class CatalogCollection:
+    def __init__(self, catalogs: CatalogCollection):
+        # Composition: It holds the specific catalogs
+        self.llms = catalogs.get("llm")
+        self.embeddings = catalogs.get("embeddings")
 ```
 
-* **Properties**
-* **`available`** - list of all registered parsers, embedders, readers
+## Appendix A
 
-```py
-pipeline.available.Parsers() # Returns list of available Parsers
-pipeline.available.Embedders() # Returns list of available Embedders
-```
+### A.1 TODO:
 
-**Methods**:
-
-### 1.0.5 `StrategyResolver()` Service
-
-
-### 1.0.x `Executor()`
-
-### 1.0.x ``
-### 1.0.x ``
+**Gemini API Usage Metrics**
+1. See if the Gemini embedding and model return those metrics after a run
+2. Itentify API properties: requests, errors, tokens_used, input_tokens, embed_tokens, etc.

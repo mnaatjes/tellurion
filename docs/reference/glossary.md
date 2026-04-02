@@ -42,6 +42,16 @@ CAO is a multi-agent orchestration framework that manages multiple Gemini CLI in
 
 ---
 
+## The Catalog (The "Public View")
+The Catalog is a frontend "View" or "Projection" of the Registry. It is what the user interacts with to discover what is possible.
+- **Definition:** A curated, read-only representation of the available items in the Registry, often enriched with human-friendly metadata (descriptions, tiers, versions).
+- **Intent:** Discovery and Selection. It is built for the human to answer the question: "What can I use right now?"
+- **Analogy:** The Library Card Catalog. It provides a summary, a title, and a location so you can find what you need without walking through 10 miles of shelves.
+- **Contract:** `list_all()`, `filter_by_type()`, or `search(query)`.
+- **Architecture:** Acts as the **Query (Read)** side of the CQRS pattern. It is a "Managed View" rather than a self-managing entity; because it is read-only at runtime, it has no state of its own to manage. It simply projects the current state of the Registry.
+
+---
+
 ## Context Window
 The maximum amount of information (tokens) the LLM can "hold in its head" at a single moment. It is the sum of System Instructions (Anchor), the Working Set (Files), Chat History, and Tool Outputs.
 - **Reference:** [Monitoring and Managing the Context Window](../how-to/gemini-cli/monitor-context-window.md), [Context Window Monitoring Tools](tooling/context-window-monitors.md)
@@ -84,6 +94,31 @@ A lightweight program that exposes specific functionalities (filesystem access, 
 The physical storage infrastructure (JSON, SQLite, Vector Store) that holds data outside the LLM's temporary context window to track long-term progress.
 - **Key Fields:** Struggles, Preferences, and Mastered Topics.
 - **Reference:** [System Design Considerations](../design/outline.system-design-considerations.md)
+
+---
+
+## The Registry (The "Private Record")
+The Registry is a backend data structure (usually a Dictionary or Database) that holds the "Truth" of your system. It is managed by the Registrar.
+- **Definition:** A centralized mapping of unique identifiers (Keys) to their implementation details (Values/Blueprints).
+- **Intent:** Storage and Retrieval. It is built for the machine to find a specific tool when it needs to run a task.
+- **Analogy:** The Library Stacks. It is where the actual books are sorted by call number. It’s dense, strictly organized, and not meant for "browsing."
+- **Contract:** `get(key)` and `set(key, value)`.
+- **Architecture:** The "Source of Truth" and backend storage for Blueprints. In Hexagonal Architecture, this follows the **CQRS (Command Query Responsibility Segregation)** pattern:
+
+| Action Type | Hexagonal Component | Role | Logic Type |
+| :--- | :--- | :--- | :--- |
+| **Command (Write)** | **Registrar** | The "Input" | Validation & Storage |
+| **Query (Read)** | **Catalog** | The "Output" | Filtering & Formatting |
+
+---
+
+### The Registry/Catalog Relationship
+In a strictly Hexagonal or Clean Architecture, the relationship is asymmetrical because their "jobs" are different.
+- **The Registrar:** The "Writer." It has the keys to the vault and can add/modify Blueprints (the Input Port).
+- **The Registry:** The "Database." The actual dictionary sitting on your system's RAM.
+- **The Catalog:** The "Reader." It simply looks at the Registry and formats it for the human (the Output Port).
+
+**Rule:** You only have one Registry (the data), but you can have one Registrar and one Catalog sitting on top of it. This ensures **Data Integrity**: the Catalog never shows a model that hasn't been put into the Registry.
 
 ---
 
