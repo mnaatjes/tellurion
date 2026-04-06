@@ -5,6 +5,10 @@ llama-index-embeddings-google
 llama-index-vector-stores-chroma
 llama-index-embeddings-google-genai
 llama-index-llms-google-genai
+
+# documenation
+poetry
+
 # pytest
 pytest
 httpx
