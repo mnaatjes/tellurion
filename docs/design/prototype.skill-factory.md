@@ -1,6 +1,6 @@
 # Design Prototype: Skill Factory Automation Workflow
 
-The **Skill Factory** is a framework designed to automate the creation of "Expert Agents" (Skills) for the Gemini CLI. It acts as a bridge between raw project artifacts (code, documentation, configs) and the structured `./.gemini/skills/` architecture, ensuring that every expert is high-signal, token-efficient, and logically consistent.
+The **Skill Factory** is a framework designed to automate the creation of "Expert Agents" (Skills) for Tellurion. It acts as a bridge between raw project artifacts (code, documentation, configs) and the structured `./.tellurion/skills/` architecture, ensuring that every expert is high-signal, token-efficient, and logically consistent.
 
 ---
 

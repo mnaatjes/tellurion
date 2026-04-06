@@ -1,6 +1,6 @@
 # Design Prototype: Instance-Based Manager
 
-The **Instance-Based Manager** serves as the "Virtual Office Manager" for the Gemini CLI. Operating as a robust orchestration layer between the **Skill Factory** (static definitions) and the **CAO** (high-level logic), it manages the complete lifecycle of individual expert processes in a Linux environment.
+The **Instance-Based Manager** serves as the "Virtual Office Manager" for Tellurion. Operating as a robust orchestration layer between the **Skill Factory** (static definitions) and the **CAO** (high-level logic), it manages the complete lifecycle of individual expert processes in a Linux environment.
 
 ---
 
