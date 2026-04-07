@@ -38,6 +38,8 @@ We employ a **Monorepo-to-Polyrepo** evolution using **Python Workspaces**. This
 
 ## 4. Development Methodology
 *   **Contract-First Development:** Define schemas and interfaces (Pydantic models) before implementation.
+*   **Independent Versioning:** Each component manages its own release cycle and version number.
+    *   **Refer to:** [Versioning Roadmap](versioning-roadmap.md)
 *   **Strict Import Enforcement:** Packages may only depend on `tellurion-core` or other sibling packages via defined interfaces.
 *   **Hybrid Testing:** Per-package unit tests combined with root-level integration "Contract" tests.
 

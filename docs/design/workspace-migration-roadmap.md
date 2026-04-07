@@ -19,7 +19,9 @@ This document outlines the tactical steps to transition the `agents` project fro
     ```bash
     uv init --workspace
     ```
-2.  **Update Root `pyproject.toml`**:
+2.  **Establish Versioning Baseline**: Create a root `.bumpversion.toml` to manage package versions.
+    *   **Refer to**: [Versioning Roadmap](versioning-roadmap.md)
+3.  **Update Root `pyproject.toml`**:
     *   Set `name = "tellurion-workspace"`.
     *   Add `[tool.uv.workspace]` with `members = ["packages/*"]`.
     *   **Keep Global Dev Tools**: Move `pytest`, `httpx`, and `rich` to the root's `dev-dependencies` if applicable.
