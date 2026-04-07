@@ -1,22 +1,24 @@
 [build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
-name = "agents"
+name = "tellurion-workspace"
 version = "0.1.0"
-description = "A LlamaIndex-based agent orchestration project"
+description = "The Tellurion Framework: A modular ecosystem of specialized agents and engines."
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = [
-    "llama-index-core",
-    "llama-index-readers-file",
-    "llama-index-embeddings-google",
-    "llama-index-vector-stores-chroma",
+dependencies = []
+
+[dependency-groups]
+dev = [
     "pytest",
     "httpx",
     "rich",
 ]
+
+[tool.uv.workspace]
+members = ["packages/*"]
 
 [tool.pytest.ini_options]
 minversion = "6.0"
