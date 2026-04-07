@@ -44,31 +44,36 @@ We employ a **Monorepo-to-Polyrepo** evolution using **Python Workspaces**. This
 ---
 
 ## 5. Migration Workflow (The Tactical Path)
-The following workflow outlines the transition from a single-repo prototype to a modular **`uv` Workspace** architecture.
+The transition from a single-repo prototype to a modular **`uv` Workspace** architecture is detailed in the [Workspace Migration Roadmap](workspace-migration-roadmap.md).
 
-### Phase 1: Workspace Initialization (The "Shell")
-1.  **Initialize the Workspace:** Create a `packages/` directory at the root and initialize the workspace orchestrator using `uv init --workspace`.
-2.  **Define Workspace Members:** Update the root `pyproject.toml` to include `tool.uv.workspace` with `members = ["packages/*"]`.
-
-### Phase 2: Building "The Stitch" (`tellurion-core`)
-1.  **Initialize Core:** Create `packages/tellurion-core` and initialize it as a library (`uv init --lib`).
-2.  **Migrate Blueprints:** Move existing DTOs/Blueprints into `packages/tellurion-core/src/tellurion_core/models/`.
-3.  **Define Exports:** Ensure the core package exposes these blueprints cleanly via `__init__.py`.
-
-### Phase 3: Isolating the Ingestion Engine (`tellurion-pipeline`)
-1.  **Initialize Pipeline:** Create `packages/tellurion-pipeline` and initialize as a library. Add heavy dependencies (e.g., `llama-index-core`, `google-genai`).
-2.  **Establish the "Editable" Link:** Add `tellurion-core` as a local, editable dependency to the pipeline package.
-3.  **Migrate Logic:** Move the registries, ports, and builder services into the pipeline package.
-
-### Phase 4: Refactoring Imports (The "Cleanup")
-1.  **Update Imports:** Refactor all internal code to import Blueprints from `tellurion_core` rather than local relative paths.
-2.  **Verify Isolation:** Run tests specifically for the pipeline package to ensure no "leaks" from the root or other packages exist.
-
-### Phase 5: Polyrepo Extraction (Finality)
-1.  **Git Subtree Split:** When stable, use `git subtree split` to move the package to its own remote repository.
-2.  **Remote Dependency:** Update the root `pyproject.toml` to point to the Git URL of the new repository instead of the local path.
+### Planned Directory Structure (Framed-out)
+```text
+tellurion/
+├── pyproject.toml              # Workspace Root (Orchestrator)
+├── uv.lock                     # Shared Dependency Lockfile
+├── .venv/                      # Shared Virtual Environment
+├── docs/                       # Global Documentation
+├── tests/                      # Integration/Contract Tests
+└── packages/
+    ├── tellurion-core/         # The "Stitch" (Models & Interfaces)
+    │   ├── pyproject.toml
+    │   └── src/tellurion_core/
+    ├── tellurion-pipeline/     # Ingestion & Data Management
+    │   ├── pyproject.toml
+    │   └── src/tellurion_pipeline/
+    ├── tellurion-factory/      # Skill Generation (ETL)
+    │   ├── pyproject.toml
+    │   └── src/tellurion_factory/
+    ├── tellurion-manager/      # Instance & Process Management
+    │   ├── pyproject.toml
+    │   └── src/tellurion_manager/
+    └── tellurion-framework/    # Main CLI Entry-point
+        ├── pyproject.toml
+        └── src/tellurion_framework/
+```
 
 ---
 **Related Documents:**
+*   [Workspace Migration Roadmap](workspace-migration-roadmap.md)
 *   [Monorepo-to-Polyrepo Evolution](../explanation/architecture-evolution.md)
 *   [Contract and Testing Standards](../reference/contract-and-testing-standards.md)
