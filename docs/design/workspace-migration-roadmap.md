@@ -3,6 +3,10 @@
 This document outlines the tactical steps to transition the `agents` project from a flat structure into a **Tellurion-based `uv` Workspace**.
 
 ## Phase 1: Preparation (The "Clean Slate")
+0.  **GitHub Identity Pivot**:
+    *   Rename the repository on GitHub to `tellurion` (or your chosen name).
+    *   Change visibility to **Public** in GitHub Settings -> Danger Zone.
+    *   Update local remote: `git remote set-url origin https://github.com/mnaatjes/tellurion.git`.
 1.  **Deactivate and Delete `.venv`**: Remove the existing virtual environment to prevent path conflicts.
     ```bash
     rm -rf .venv

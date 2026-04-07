@@ -23,8 +23,13 @@ We don't move to a Polyrepo just because it's "cleaner." We wait for specific **
 ## 3. The Evolution: Monorepo-to-Polyrepo
 When a milestone is met, the component is "extracted."
 
+### Identity & Visibility
+The transition from `agents` (private) to `Tellurion` (public) is a key milestone in our strategy.
+*   **Renaming:** Renaming the GitHub repository to `tellurion` signals the transition from a prototype to a framework.
+*   **Public Visibility:** Making the repository public is a commitment to standard software practices (CI/CD, proper documentation, versioning) and facilitates its use as a dependency.
+
 ### Git & GitHub Implications
-*   **Before Extraction:** One repository (`agents.git`), one set of branches, one history.
+*   **Before Extraction:** One repository (`tellurion.git`), one set of branches, one history.
 *   **During Extraction:** We use `git subtree split` to "carve out" the folder's history into a new repository.
 *   **After Extraction:**
     *   The component gets its own GitHub repository (e.g., `tellurion-pipeline.git`).
