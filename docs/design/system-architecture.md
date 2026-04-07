@@ -3,6 +3,9 @@
 ## 1. Vision Overview
 The Tellurion Framework is designed as a modular ecosystem of specialized agents and engines. To maintain developer velocity while ensuring long-term scalability, the project follows a **Modular Monorepo** pattern, transitioning towards a **Polyrepo** architecture as components stabilize.
 
+*   **Strategy:** [Repository Strategy](../explanation/repository-strategy.md)
+*   **Workflow:** [Monorepo-to-Polyrepo Workflow](monorepo-to-polyrepo-workflow.md)
+
 ### Core Components
 | Component | Role | Status |
 | :--- | :--- | :--- |

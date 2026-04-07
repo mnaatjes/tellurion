@@ -33,7 +33,7 @@ replace = 'version = "{new_version}"'
 ```
 
 ## 4. Transition to Polyrepo
-When a package is extracted into its own repository:
+When a package is extracted into its own repository (following the [Repository Strategy](../explanation/repository-strategy.md) and [Extraction Workflow](monorepo-to-polyrepo-workflow.md)):
 1.  The Git history is split.
 2.  The package keeps its current version number.
 3.  The `.bumpversion.toml` is moved into the new repository and simplified to only track that package.
@@ -41,4 +41,6 @@ When a package is extracted into its own repository:
 ---
 **Related Documents:**
 *   [How-To: Updating Versions](../how-to/updating-versions.md)
+*   [Repository Strategy](../explanation/repository-strategy.md)
+*   [Extraction Workflow](monorepo-to-polyrepo-workflow.md)
 *   [Workspace Migration Roadmap](workspace-migration-roadmap.md)

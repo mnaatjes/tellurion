@@ -62,6 +62,11 @@ This document outlines the tactical steps to transition the `agents` project fro
     pytest tests/
     ```
 
+## Phase 6: Post-Migration (Evolution)
+The workspace is now a modular monorepo. As components stabilize, we will transition to a polyrepo structure.
+*   **Refer to:** [Repository Strategy](../explanation/repository-strategy.md)
+*   **Refer to:** [Extraction Workflow](monorepo-to-polyrepo-workflow.md)
+
 ---
 **Status Indicators:**
 *   [ ] Phase 1: Preparation
@@ -69,3 +74,4 @@ This document outlines the tactical steps to transition the `agents` project fro
 *   [ ] Phase 3: Core Bootstrap
 *   [ ] Phase 4: Pipeline Isolation
 *   [ ] Phase 5: Verification
+*   [ ] Phase 6: Extraction (Optional/Future)
