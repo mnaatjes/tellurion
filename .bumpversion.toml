@@ -1,0 +1,24 @@
+[tool.bumpversion]
+current_version = "0.1.0"
+parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
+serialize = ["{major}.{minor}.{patch}"]
+search = 'version = "{current_version}"'
+replace = 'version = "{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+
+[[tool.bumpversion.files]]
+filename = "packages/tellurion-core/pyproject.toml"
+
+[[tool.bumpversion.files]]
+filename = "packages/tellurion-factory/pyproject.toml"
+
+[[tool.bumpversion.files]]
+filename = "packages/tellurion-framework/pyproject.toml"
+
+[[tool.bumpversion.files]]
+filename = "packages/tellurion-manager/pyproject.toml"
+
+[[tool.bumpversion.files]]
+filename = "packages/tellurion-pipeline/pyproject.toml"
