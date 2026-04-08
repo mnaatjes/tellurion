@@ -1,0 +1,26 @@
+metadata:
+  updated_at: "2026-04-08 2:42:00"
+  version: "0.1.0"
+
+sessions:
+  "2e9af108":
+    timestamp: "2026-04-08 2:42:00"
+    models:
+      - name: "gemini-2.5-flash-lite"
+        reqs: 35
+        input_tokens: 153787
+        output_tokes: 2825
+        efficiency: 0.0
+      - name: "gemini-2.5-flash-preview"
+        reqs: 79
+        input_tokens: 1037999
+        output_tokes: 30536
+        efficiency: 0.0
+    calls: 66
+    code_changes: "+555 -34"
+    git:
+      repository: "tellurion"
+      branches_affected: ["main", "feat/contract"]
+      remote_url: "https://github.com/mnaatjes/tellurion.git"
+    summary: ""
+  "7d668e76": 
