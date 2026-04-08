@@ -1,6 +1,6 @@
-# System Architecture: Modular Evolution
+# System Architecture
 
-The Tellurion Framework is designed as a modular ecosystem of specialized agents and engines. This architecture follows a **Modular Monorepo** pattern, ensuring clean boundaries, independent package lifecycles, and a clear path toward potential polyrepo extraction.
+The Tellurion Framework is a modular ecosystem of specialized agents and engines. This architecture follows a **Modular Monorepo** pattern, governed by strict package boundaries and the **"Code of Laws"** defined in `.tellurion/rules.yml`.
 
 ## 1. Directory Structure
 
@@ -13,39 +13,37 @@ tellurion/
 ├── tests/                      # Integration & Unit Tests
 └── packages/
     ├── tellurion-core/         # The "Stitch" (Common Models & Interfaces)
-    │   ├── pyproject.toml
-    │   └── src/tellurion_core/
     ├── tellurion-pipeline/     # Ingestion & Data Management (LlamaIndex)
-    │   ├── pyproject.toml
-    │   └── src/tellurion_pipeline/
     ├── tellurion-factory/      # Skill Generation (ETL-based Architecture)
-    │   ├── pyproject.toml
-    │   └── src/tellurion_factory/
     ├── tellurion-manager/      # Instance & Process Management (Tmux/Process)
-    │   ├── pyproject.toml
-    │   └── src/tellurion_manager/
     └── tellurion-framework/    # Main CLI Entry-point (The "Skin")
-        ├── pyproject.toml
-        └── src/tellurion_framework/
 ```
 
-## 2. Core Components
+## 2. Foundational Principles
 
-| Component | Responsibility | Current Phase |
-| :--- | :--- | :--- |
-| **`tellurion-core`** | Shared DTOs, Pydantic Blueprints, and Base Interfaces. | **Phase 3: Bootstrapping** |
-| **`tellurion-pipeline`** | Data ingestion, Vector Store management, and ETL logic. | **Phase 4: Development** |
-| **`tellurion-factory`** | The Skill Architect (generating agents and their behaviors). | **Phase 1: Scaffolding** |
-| **`tellurion-manager`** | Orchestrating runtime processes and instance lifecycle. | **Phase 1: Scaffolding** |
-| **`tellurion-framework`** | CLI user interface and cross-package orchestration. | **Phase 1: Scaffolding** |
+These are the primary directives that govern all development within the project:
 
-## 3. Key Standards & Protocols
-- **Versioning:** Synchronized via `bump-my-version` at the root.
-- **Dependency Management:** Handled by `uv` Workspaces with a shared lockfile.
-- **Contract-First:** Interfaces and models are defined in `tellurion-core` before implementation.
+- **Contract-First Development**: All data structures and interfaces must be defined in `tellurion-core` before implementation.
+- **Hexagonal Architecture**: Business logic is isolated from external adapters. Engines (like `tellurion-pipeline`) are adapters for the core domain.
+- **Modular Monorepo**: Cross-package imports are strictly limited to the `core` package to prevent circular dependencies.
 
-## 4. Related Documentation
+## 3. Package Governance & Responsibilities
+
+| Package | Responsibility | Dependencies | Enforcement |
+| :--- | :--- | :--- | :--- |
+| **`tellurion-core`** | **Stitch**: Shared DTOs, Pydantic Blueprints, and Base Interfaces. | None | Strictly domain-only structure. |
+| **`tellurion-pipeline`** | **Ingestion**: Adapting LlamaIndex to the Tellurion Domain. | `tellurion-core` | Focused on data and vector management. |
+| **`tellurion-framework`** | **Skin**: CLI entry-point and orchestrator. | Any (*) | Logic-lite "glue" code only. |
+| **`tellurion-factory`** | **Skill Architect**: Generating agent behaviors via ETL. | `tellurion-core` | Specialized in manufacturing skills. |
+| **`tellurion-manager`** | **Runtime**: Process and instance orchestration. | `tellurion-core` | Managing Tmux/Process lifecycles. |
+
+## 4. Communication Protocols
+
+- **Blueprint-First**: All package-to-package communication MUST occur through Pydantic Blueprints defined in `tellurion-core`.
+- **Abstraction**: Direct access to external systems (DB, filesystem) must be abstracted through a Blueprint-aware interface.
+
+## 5. Related Documentation
 - [Workspace Migration Roadmap](workspace-migration-roadmap.md)
 - [Monorepo-to-Polyrepo Workflow](monorepo-to-polyrepo-workflow.md)
-- [Versioning Baseline (Archived)](archive/versioning-roadmap-20260408.md)
+- [ADR Workflows](../how-to/adr-workflows.md)
 - [Original Architecture (Archived)](archive/system-architecture-20260408.md)
