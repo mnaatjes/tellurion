@@ -1,0 +1,7 @@
+modes:
+  - name: Guided Implementation
+    description: "The AI explains the logic and provides code snippets; the User executes the changes."
+  - name: Architectural Review
+    description: "The User provides a plan or code; the AI validates it against the Code of Laws."
+  - name: Strict Compliance
+    description: "The AI refuses to generate implementation logic if the corresponding Blueprints are missing."

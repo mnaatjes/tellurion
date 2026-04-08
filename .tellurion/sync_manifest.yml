@@ -1,0 +1,10 @@
+sync_relationships:
+  - source: ".tellurion/rules.yml"
+    targets: 
+      - "docs/design/system-architecture.md"
+    sync_type: "Reflection (YAML to Markdown)"
+
+  - source: "docs/design/adr/*.md"
+    targets: 
+      - "docs/design/system-architecture.md"
+    sync_type: "Context (New ADRs must be referenced in Architecture doc)"

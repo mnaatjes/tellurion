@@ -8,6 +8,11 @@ foundational_principles:
     directive: "Isolate business logic from infrastructure. Engines (pipeline) are adapters; Core Blueprints are the domain."
   - name: Modular Monorepo
     directive: "Enforce strict package boundaries. No cross-package imports outside of core."
+  - name: Architecture Governance
+    directives: 
+      - "Architecture changes must be preceded by an ADR in docs/design/adr/."
+      - "Important Context about architecture is contained in ADRs."
+      - "docs/design/system-architecture.md must be synced to ADR documents and reference new ones."
 
 # Package management and directives
 package_governance:

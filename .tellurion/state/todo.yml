@@ -1,0 +1,17 @@
+# Tellurion Project TODOs
+
+## Immediate Next Steps (Priority)
+- [ ] **Initialize `tellurion-ops`**: `cd packages && mkdir tellurion-ops && cd tellurion-ops && uv init --lib`.
+- [ ] **Implement `tellurion-ops` Logic**: Create the first sync script (YAML -> Markdown for `system-architecture.md`).
+- [ ] **Phase 3: Core Blueprints**:
+    - [ ] Create `packages/tellurion-core/src/tellurion_core/blueprints/agent.py`.
+    - [ ] Define the first `AgentBlueprint` Pydantic model.
+    - [ ] Define `SourceBlueprint` and `KnowledgeBlueprint`.
+
+## Pending Integration Tasks
+- [ ] Migrate `tests/unit/__test_prototype.py` logic into `tellurion-pipeline` source.
+- [ ] Update `tests/conftest.py` to be workspace-aware.
+
+## Long-term Governance
+- [ ] Implement `import-linter` to programmatically enforce package boundaries.
+- [ ] Add pre-commit hooks for `ruff` and `uv lock --check`.
