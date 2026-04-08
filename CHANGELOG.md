@@ -10,3 +10,4 @@ All notable changes to the Tellurion project will be documented in this file.
 
 ### Changed
 - Formally closed-out Migration to multi-package repository
+- Archived documents related to Migration

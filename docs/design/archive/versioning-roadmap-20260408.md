@@ -1,3 +1,6 @@
+> **Status: COMPLETED / ARCHIVED**
+> This document reflects the initial design phase and is preserved for historical context.
+
 # Versioning Roadmap: Independent & Synchronized
 
 In a **Modular Monorepo**, we must balance the need for independent component lifecycles with the clarity of a unified project. This document defines how we manage versions across the Tellurion ecosystem.
