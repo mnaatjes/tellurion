@@ -22,3 +22,8 @@ filename = "packages/tellurion-manager/pyproject.toml"
 
 [[tool.bumpversion.files]]
 filename = "packages/tellurion-pipeline/pyproject.toml"
+
+[[tool.bumpversion.files]]
+filename = ".tellurion/rules.yml"
+search = 'version: {current_version}'
+replace = 'version: {new_version}'

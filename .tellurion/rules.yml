@@ -1,0 +1,52 @@
+version: 0.1.0
+project_name: Tellurion
+# Main Directives for entire project scope
+foundational_principles:
+  - name: Contract-First Development
+    directive: "Define Pydantic Blueprints in tellurion-core before any implementation."
+  - name: Hexagonal Architecture (Ports & Adapters)
+    directive: "Isolate business logic from infrastructure. Engines (pipeline) are adapters; Core Blueprints are the domain."
+  - name: Modular Monorepo
+    directive: "Enforce strict package boundaries. No cross-package imports outside of core."
+
+# Package management and directives
+package_governance:
+  tellurion_core:
+    responsibility: "Stitch: Shared DTOs, Blueprints, and Base Interfaces"
+    dependencies: # MUST NOT depend on other internal packages
+      allowed: []
+      forbidden: []
+    enforcement: "Strictly domain-only. No logic. Only structure"
+
+  tellurion_factory:
+    responsibility: ""
+    dependencies: 
+      allowed: []
+      forbidden: []
+    enforcement: ""
+
+  tellurion_framework:
+    responsibility: "Skin: CLI entry-point and cross-package Orchestrator"
+    dependencies: 
+      allowed: ["*"]  # Allow all Packages
+      forbidden: []
+    enforcement: "Logic-lite. Only glues other packages together."
+
+  tellurion_manager:
+    responsibility: ""
+    dependencies: 
+      allowed: []
+      forbidden: []
+    enforcement: ""
+
+  tellurion_pipeline:
+    responsibility: "Data Ingestion and Vector Management. Adapts LlamaIndex to Tellurion Domain"
+    dependencies: 
+      allowed: ["tellurion-core"]
+      forbidden: ["tellurion-framework", "tellurion-factory"]
+    enforcement: ""
+
+# Package Interactions
+communication_rules:
+  - "Packages MUST communicate via Blueprints defined in tellurion-core."
+  - "Direct database or file-system access must be abstracted behind a Blueprint-aware interface."

@@ -7,6 +7,8 @@ All notable changes to the Tellurion project will be documented in this file.
 - Initialized `uv` workspace architecture
 - Scaffolded `tellurion-*`
 - Established `bump-my-version` configuration
+- Implemented Architecture Decision Records
+- Added `.tellurion/rules.yml` to bumpversion
 
 ### Changed
 - Formally closed-out Migration to multi-package repository
