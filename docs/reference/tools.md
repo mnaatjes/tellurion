@@ -73,5 +73,12 @@ Standardized communication and routing layers for agents.
 | **Agent Protocol** | Open API specification for interoperability between agent backends. | [specialized-agent-interfaces.md](tooling/specialized-agent-interfaces.md) |
 | **RouteLLM** | Framework for optimized model routing to minimize token expense. | [client-agent-orchestrators.md](tooling/client-agent-orchestrators.md) |
 | **OpenDevin / Devin** | Advanced autonomous engineering agents for complex terminal tasks. | [specialized-agent-interfaces.md](tooling/specialized-agent-interfaces.md) |
-| **llm (Simon Willison)** | Extensible CLI utility for persona-based LLM interaction. | [cli-native-utilities.md](tooling/cli-native-utilities.md) |
+| llm (Simon Willison) | Extensible CLI utility for persona-based LLM interaction. | [cli-native-utilities.md](tooling/cli-native-utilities.md) |
 | **Aider** | Terminal-based pair programming assistant with deep file-system awareness. | [cli-native-utilities.md](tooling/cli-native-utilities.md) |
+
+## 8. Concepts and Terminology
+Additional documentation on tool categorization and professional workflows.
+
+- [Architecture and Terminology: Package vs. Program](../explanation/gemini-cli/architecture-and-terminology.md)
+- [Professional AI Workflows and Tool Categories](../explanation/gemini-cli/professional-workflows.md)
+

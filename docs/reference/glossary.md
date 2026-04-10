@@ -181,3 +181,40 @@ A hyperparameter that cuts off the "long tail" of low-probability tokens. Combin
 The conversion of text into numerical arrays to enable efficient semantic search (RAG) without overwhelming the context window.
 - **Mechanism:** Similarity search against a local cache (e.g., `.gemini/cache/embeddings/`).
 - **Reference:** [Assigning and Managing Vector Embeddings](../how-to/gemini-cli/assign-vector-embeddings.md)
+
+---
+
+## AI Workflow & Tooling
+
+### npm package (@google/gemini-cli)
+A Node.js-based CLI application distributed via the Node Package Manager. It contains the core logic, assets, and dependencies required to act as an AI Agent or Proxy.
+
+### Program (gemini)
+The specific command-line binary or symbolic link (symlink) registered in the system's PATH. It initializes the Node.js runtime and executes the logic contained within the npm package.
+
+### CLI (Command Line Interface)
+The interactive interface layer of the program. In Gemini CLI, this includes the REPL (Read-Eval-Print Loop), the interactive prompt, and features like context-loading (@path/to/file).
+
+### AI Coding Agent / Coding Agent
+A category of tools (e.g., Gemini CLI, Claude Code, Aider) that possess "agency"—the ability to read the file tree, execute shell commands, and edit code directly within a local environment. Also known as "Agentic CLIs" or "Terminal-based Agents."
+
+### LLM Client / Wrapper
+A lightweight tool (e.g., `llm` by Simon Willison, `aichat`) that provides CLI access to an LLM API without the autonomous "agency" to modify the local system.
+
+### TUI (Terminal User Interface)
+A full-screen terminal application that uses boxes, colors, and sidebars (e.g., `oterm`, `elia`), replacing the standard command history with a graphical-like experience inside the terminal.
+
+### In-Context Development
+A professional workflow where the AI agent is "grounded" in the local project environment, having direct access to `.git`, configuration files, and the full directory structure.
+
+### AI-Augmented Programming
+A collaborative state where a human developer and an AI agent work together, often described as "AI Pair Programming."
+
+### Agentic Workflow
+An iterative loop where an agent performs a cycle of **Plan** (analyze state), **Act** (run command/edit file), **Observe** (see output), and **Refine** (adjust next steps).
+
+### CLI-Native Development
+A workflow that manages the entire Software Development Life Cycle (SDLC) exclusively through terminal-based tools, avoiding the overhead of graphical user interfaces (GUIs).
+
+### Human-in-the-Loop (HITL)
+A project management approach where the human developer observes the agent's actions and provides approvals or corrections, ensuring the agent remains aligned with the project goals.
