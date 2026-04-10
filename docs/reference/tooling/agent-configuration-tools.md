@@ -26,4 +26,14 @@ Instead of defining personas from scratch, you can adapt blueprints from establi
 
 - **Fabric Patterns:** A library of proven "Expert Personas" for coding, summarizing, and complex logic extraction.
 - **LangChain Hub:** A repository of "Prompt Blueprints" and complex "Chains of Thought" that can be adapted into the `SKILL.md` instructions.
-- **Aider Benchmarks:** Reference scripts and patterns used to test and improve agent performance in coding tasks.
+## 4. Context Management Tools
+
+To implement the **Context Engineering** strategies described in `docs/explanation/context_engineering/`, developers utilize specialized infrastructure and utilities.
+
+| Tool | Category | Key Use Case |
+| :--- | :--- | :--- |
+| **AWS Bedrock AgentCore** | Managed Context Infrastructure | Provides built-in session context management, source attribution, and long-term memory. |
+| **AWS Bedrock Knowledge Base** | Managed RAG Pipeline | Handles ingestion, chunking, and retrieval logic, exposing it to the agent via a single endpoint. |
+| **mem0** | Memory Layer | A tool for extracting facts and preferences from conversations and committing them to long-term episodic memory. |
+| **MinHash** | Context Deduplication | An algorithm used to identify and strip out redundant information before it enters the context window. |
+| **AgentCore Gateway** | Tool Management Proxy | Acts as a centralized proxy for tool ecosystems, supporting semantic search to load only relevant tools. |

@@ -22,6 +22,7 @@ This directory provides deep dives into the core concepts, communication protoco
 - **[Ingestion Pipeline](./ingestion-pipeline.md):** Conceptual overview of the data ingestion and transformation logic.
 - **[Knowledge Graphs](./knowledge-graphs.md):** Theory and implementation of graph-based system memory.
 - **[Vector Embeddings](./base-embedding.md):** How the system uses numerical arrays for semantic retrieval.
+- **[Context Engineering](./context_engineering/README.md):** The art and science of optimizing information, tools, and formats for AI agents.
 - **[Managing Token Efficiency](./managing-token-efficiency.md):** Strategies for context management and cost reduction.
 
 ---

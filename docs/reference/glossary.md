@@ -177,10 +177,91 @@ A hyperparameter that cuts off the "long tail" of low-probability tokens. Combin
 
 ---
 
+## Context Engineering
+The art and discipline of providing the right information, tools, and format to an LLM to maximize the probability of a high-quality outcome while minimizing token usage. It involves the strategic curation of the model's limited context window and the use of dynamic retrieval, compression, and isolation techniques.
+- **Reference:** [Context Engineering Deep Dive](../explanation/context_engineering/README.md)
+
+---
+
+## Context Rot / Context Decay
+A situation where an LLM's reasoning and recall performance degrades as the context window fills up, even if the total token count is within technical limits. This is often caused by the model's inability to maintain perfect attention across its entire working memory.
+- **Related Term:** [Lost-in-the-Middle](#information-overload-lost-in-the-middle)
+- **Reference:** [Challenges and Bottlenecks](../explanation/context_engineering/challenges.md)
+
+---
+
+## Context Pollution
+The presence of unnecessary, conflicting, or redundant information in the context window that "distracts" the model and depletes its finite attention budget.
+
+---
+
+## Context Drift
+A failure mode where conflicting pieces of information accumulate in the agent's memory over time (e.g., outdated budget vs. new budget), leading the model to operate with a corrupted or inconsistent knowledge base.
+
+---
+
+## Context Compaction / Folding
+A management technique where the model summarizes its current context and re-initiates a new window with the summary. **Folding** specifically refers to branching off for a sub-task and collapsing the results into a concise outcome upon completion.
+- **Reference:** [Optimization Techniques](../explanation/context_engineering/optimization-techniques.md)
+
+---
+
+## Agent Harness
+The deterministic "shell" wrapped around the stochastic LLM core. It manages how context is assembled, tool routing, retry policies, and state persistence between steps to ensure the model stays focused on the task rather than reconstructing its own state.
+
+---
+
+## Code Mode
+An advanced context engineering pattern where the agent writes code to fetch, process, and filter massive amounts of data in a secure sandbox *before* it enters the context window. This prevents "context suicide" by keeping raw data out-of-band.
+- **Reference:** [Advanced Cognitive Architectures](../explanation/context_engineering/advanced-architectures.md)
+
+---
+
+## Memory Pointers
+Lightweight identifiers (e.g., `[memory:doc_1234]`) used within the context window to reference large external documents or tool outputs. This allows the agent to track many items without consuming thousands of tokens.
+
+---
+
+## Recursive Language Model (RLM)
+An architectural pattern for processing data far beyond any single context limit. It involves storing context in a Python REPL environment and using the model to write code that recursively partitions and summarizes data chunks.
+- **Reference:** [Advanced Cognitive Architectures](../explanation/context_engineering/advanced-architectures.md)
+
+---
+
 ## Vector Embeddings
 The conversion of text into numerical arrays to enable efficient semantic search (RAG) without overwhelming the context window.
 - **Mechanism:** Similarity search against a local cache (e.g., `.gemini/cache/embeddings/`).
 - **Reference:** [Assigning and Managing Vector Embeddings](../how-to/gemini-cli/assign-vector-embeddings.md)
+
+---
+
+## Agentic Context Engineering
+The practice of architectural control over the information lifecycle of an agent. It focuses on ensuring the agent completes multi-step tasks within its token budget by dynamically managing what enters context, what is compressed, and what is isolated.
+- **Reference:** [Advanced Cognitive Architectures](../explanation/context_engineering/advanced-architectures.md)
+
+---
+
+## Context-Augmented Generation (CAG)
+A strategy of pre-loading a model with all potentially relevant context (often entire documents) rather than using dynamic retrieval (RAG). While expensive in terms of initial tokens, it can improve accuracy for complex, holistic reasoning tasks.
+
+---
+
+## Persisted Agent vs. Session-based Agent
+- **Session-based Agent:** An agent whose context is restricted to a single interaction thread. Every session starts from a clean state (often grounded in a config file like `GEMINI.md`).
+- **Persisted Agent:** An agent that maintains long-term memory and learning across multiple sessions and conversations, effectively "growing" its understanding of the project over time.
+- **Reference:** [Implementation Patterns](../explanation/context_engineering/implementation-patterns.md)
+
+---
+
+## Product Requirements Prompt (PRP)
+A comprehensive implementation blueprint designed for AI coding assistants. It serves as a bridge between high-level feature requests and executable code, including context, validation gates, and test requirements.
+- **Reference:** [Implementation Patterns](../explanation/context_engineering/implementation-patterns.md)
+
+---
+
+## Vibe Coding
+A slang term for ad-hoc, prompt-driven prototyping that lacks engineering discipline. It is often contrasted with **Context Engineering**, which uses structured context, validation, and architectural alignment to build production-grade systems.
+- **Reference:** [Evolution and History](../explanation/context_engineering/evolution-and-history.md)
 
 ---
 
