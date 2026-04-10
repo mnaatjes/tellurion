@@ -57,13 +57,24 @@ For the most advanced performance in early 2026, **Gemini Embedding 2** is the r
 
 ## 4. Critical Rules for ETL Pipelines
 
-### The Re-indexing Rule
-**You cannot mix and match embedding models.** The model used to index data (create the vectors) must be the exact same model used to query it. Changing your `embed_model` requires deleting your vector database (e.g., ChromaDB) and re-processing all documents.
+### The "Golden Rule" of RAG Architecture
+While you can mix different providers for the Embedding and the LLM (e.g., OpenAI embedder with a Google LLM), you **must** use the exact same embedding model for both indexing and querying.
 
-### Dimensionality and Semantic Resolution
-Different models produce different vector sizes (e.g., 768 vs. 3,072 dimensions). 
-- **Compatibility:** Vector stores are typically locked to a specific dimension size.
-- **Matryoshka Representation Learning (MRL):** Modern models like Gemini Embedding 2 allow you to truncate vectors (e.g., from 3,072 down to 768) to save storage without significant loss in accuracy.
+*   **Indexing:** Turning your documents into vectors to store in the database.
+*   **Querying:** Turning the user’s question into a vector to search that database.
+
+If you index your data with Google’s `text-embedding-004` but try to search it using a vector created by OpenAI’s `text-embedding-3-small`, the math will not align. It would be like trying to find a street address in Paris using a map of Kalamazoo—the coordinates mean completely different things.
+
+### The Proprietary "Black Box"
+Embedding models are often proprietary "Black Boxes." For example, the internal "math" of how Google translates a word into a vector is completely different from OpenAI's math.
+*   **Architect's Perspective:** You treat the embedding model as a Black Box Translator. You feed it Text; it spits out Numbers. You save those Numbers in a database next to the Text.
+*   **Intercompatibility:** You cannot mix vectors from different models (a "handshake" between raw numbers fails). However, because the final retrieval stage converts the vector back into plain text before it reaches the LLM, the LLM itself (the "Brain") can read text found by *any* embedding model.
+
+| Scenario | Possible? | Why? |
+| :--- | :--- | :--- |
+| **Search:** Google Vector vs. Google Vector | **YES** | They speak the same "mathematical language." |
+| **Search:** Google Vector vs. OpenAI Vector | **NO** | Different coordinate systems; raw numbers don't match. |
+| **Processing:** Google-found Text → OpenAI LLM | **YES** | Both models speak "Human Language" (English, Python, etc.). |
 
 ---
 

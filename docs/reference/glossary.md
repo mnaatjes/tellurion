@@ -2,6 +2,10 @@
 
 This document defines core concepts related to the operation and management of agent-based command-line interfaces.
 
+## AI Solutions Architect
+The bridge between high-level business problems and technical implementation. This role focuses on the entire AI ecosystem—designing RAG pipelines, choosing model providers, and ensuring scalability and security.
+- **Reference:** [Project Roles](roles.md)
+
 ---
 
 ## Agent-CLI "Windows"
@@ -97,6 +101,12 @@ The physical storage infrastructure (JSON, SQLite, Vector Store) that holds data
 
 ---
 
+## RAG (Retrieval-Augmented Generation)
+A design pattern where an LLM is provided with relevant external context (retrieved from a Vector Database or Knowledge Graph) to answer questions about data it was not originally trained on.
+- **Reference:** [Ingestion Pipeline: Internal vs. Custom Vector DBs](../explanation/ingestion-pipeline.md)
+
+---
+
 ## The Registry (The "Private Record")
 The Registry is a backend data structure (usually a Dictionary or Database) that holds the "Truth" of your system. It is managed by the Registrar.
 - **Definition:** A centralized mapping of unique identifiers (Keys) to their implementation details (Values/Blueprints).
@@ -132,6 +142,26 @@ A structured instruction set used to restrict an agent's focus and define specif
 ## Session Commands
 The specific "Slash Commands" (e.g., `/clear`, `/compress`) used to interact with the CLI's internal state without sending text as a prompt to the LLM.
 - **Reference:** [Monitoring and Managing the Context Window](../how-to/gemini-cli/monitor-context-window.md)
+
+---
+
+## Standard Industry Terms (RAG)
+
+### The Content (Data on Disk)
+*   **Source Documents:** Raw files (PDF, Markdown, etc.) before ingestion.
+*   **Chunks / Nodes:** Smaller text fragments after splitting a Source Document (e.g., 500-word sections).
+*   **Corpus:** The entire collection of all processed text chunks in the system.
+*   **Metadata:** Extra info attached to a chunk (filename, page number, timestamp).
+
+### The Query (User Input)
+*   **Query String:** Raw natural language typed by the user.
+*   **Query Vector:** The numerical translation of the query string at runtime.
+*   **Top-K:** The number of retrieved results to be sent to the LLM (e.g., "Top-3").
+
+### The Process (Actions)
+*   **Upserting:** ("Update or Insert") Adding new vectors or updating existing ones in the persist storage.
+*   **Similarity Search:** The mathematical comparison of the Query Vector against the Stored Vectors.
+*   **Augmentation:** The act of "stuffing" context chunks into the prompt before the LLM step.
 
 ---
 

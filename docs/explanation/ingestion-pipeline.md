@@ -18,6 +18,48 @@ Instead of defining `chunkSize` or `overlap`, you define a `tools` or `mcpServer
 
 ---
 
+## Understanding Retrieval-Augmented Generation (RAG)
+
+As an Architect, you use RAG when you want an LLM to answer questions about data it wasn't trained on (e.g., private company documents). Think of the LLM as a brilliant student taking an exam:
+- **Standard LLM:** Relies on memory (Training Data). If info is new/private, it guesses (Hallucinates).
+- **RAG:** Student is allowed a textbook. They look up the relevant page, read it, and answer based on that specific text.
+
+### The RAG Pipeline "Plumbing"
+
+The process follows two distinct phases:
+
+#### Phase A: Ingestion (Preparing the Textbook)
+1.  **Chunking:** Break a 100-page document into manageable "chunks" (e.g., 500 words).
+2.  **Embedding:** Run chunks through an **Embedding Model** to create numerical vectors.
+3.  **Storage:** Save the Vector + Original Text into a **Vector Database**.
+
+#### Phase B: Retrieval (The Exam)
+1.  **The Query:** User asks a question (e.g., "What is our policy on remote work?").
+2.  **Vector Search:** Convert the question into a vector; find the Top-N mathematically closest chunks in the database.
+3.  **Augmentation:** "Stuff" those chunks into the prompt alongside the question.
+4.  **Generation:** The LLM generates an answer based **ONLY** on the provided chunks.
+
+### Response Synthesis: The Architect's "Secret Sauce"
+
+Once the search engine finds the relevant "Context Chunks," the orchestrator must decide how to present them to the LLM. This is a high-level design choice called **Response Synthesis**:
+
+| Mode | How it Works | Use Case |
+| :--- | :--- | :--- |
+| **Stuffing (Compact)** | Shoves as many chunks as possible into one single prompt. | Fastest and cheapest. Best for simple queries. |
+| **Refine** | Sends the first chunk for an initial answer, then sends subsequent chunks to improve it. | Best for high accuracy or very long documents. |
+| **Tree Summarize** | Recursively summarizes chunks in pairs until a final answer is reached. | Best for massive context (e.g., "Summarize this whole book"). |
+
+### RAG vs. Fine-Tuning
+
+| Feature | RAG (Retrieval) | Fine-Tuning (Training) |
+| :--- | :--- | :--- |
+| **Cost** | Low (Pay per search) | High (GPU compute costs) |
+| **Data Freshness** | Instant (Add a new doc) | Delayed (Requires retraining) |
+| **Accuracy** | High (Shows its sources) | Medium (Can still hallucinate) |
+| **Transparency** | Clear (See exactly what it read) | "Black Box" (Hard to debug) |
+
+---
+
 ## Key Distinctions
 
 | Feature | CLI-Managed Ingestion | Your Custom Vector DB |

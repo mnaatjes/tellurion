@@ -3,6 +3,7 @@ metadata:
   version: "0.1.0"
 
 sessions:
+  # Last Session 
   "2e9af108":
     timestamp: "2026-04-08 2:42:00"
     models:
@@ -23,4 +24,14 @@ sessions:
       branches_affected: ["main", "feat/contract"]
       remote_url: "https://github.com/mnaatjes/tellurion.git"
     summary: ""
+  # Previous Sessions
   "7d668e76": 
+    description: "Updated pyproject.toml for uv workspace"
+    timestamp: "2026-04-08 ?"
+    models: null
+    calls: 66
+    code_changes: ""
+    git:
+      repository: "tellurion"
+      branches_affected: []
+      remote_url: ""

@@ -29,3 +29,21 @@ Provides the technical data structures and JSON-RPC methods the servers expect. 
 ## 4. Why Use MCP?
 
 By using MCP, the Gemini CLI moves from being a simple chat interface to a powerful, data-aware agent capable of interacting with your local environment in a structured and secure manner.
+
+---
+
+## 5. The "Tellurion" Stack: How it Fits Together
+
+In a professional architecture, MCP acts as the "Standard USB Port" that connects your local intelligence to the LLM.
+
+| Layer | Component | Professional Function |
+| :--- | :--- | :--- |
+| **Intelligence** | Gemini LLM | The "Brain" that processes logic and reasoning. |
+| **Persona** | Gemini Skills | The instructions: "Act as the Tellurion Orchestrator." |
+| **Interface** | **MCP Protocol** | The "USB Cable" connecting the Brain to the Tools. |
+| **Retrieval** | LlamaIndex / Tellurion | The "Librarian" searching the vector persistence. |
+| **Data** | Linux Files / Vectors | The actual knowledge (e.g., project docs, Buick manuals). |
+
+### LlamaIndex as an MCP Server
+LlamaIndex can itself be wrapped in an MCP server. This allows any MCP-compatible client (Claude Desktop, Cursor IDE, or another Gemini CLI instance) to query your project's vector index without needing a custom API for each one. This turns your local "Knowledge Base" into a standardized, pluggable service.
+

@@ -42,7 +42,18 @@ These are the primary directives that govern all development within the project:
 - **Blueprint-First**: All package-to-package communication MUST occur through Pydantic Blueprints defined in `tellurion-core`.
 - **Abstraction**: Direct access to external systems (DB, filesystem) must be abstracted through a Blueprint-aware interface.
 
-## 5. Related Documentation
+## 5. Modern AI Workflow Quick-Reference
+
+While **RAG** provides the "grounding" necessity (preventing hallucinations and providing cost-effective "long-term memory"), a professional deployment requires the following operational layers (Detailed in [The Operational Stack](../explanation/operational-stack.md)):
+
+| Component | Role | Primary Output |
+| :--- | :--- | :--- |
+| **Orchestration** | Logical Execution | Completed Task / Plan |
+| **Guardrails** | Security & Format | Validated / Safe Text |
+| **Observability** | Tracking & Quality | Traces & Accuracy Scores |
+| **Semantic Caching** | Speed & Savings | Pre-computed Response |
+
+## 6. Related Documentation
 - [Workspace Migration Roadmap](workspace-migration-roadmap.md)
 - [Monorepo-to-Polyrepo Workflow](monorepo-to-polyrepo-workflow.md)
 - [ADR Workflows](../how-to/adr-workflows.md)
