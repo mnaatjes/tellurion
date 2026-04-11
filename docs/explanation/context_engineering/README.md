@@ -10,6 +10,7 @@ In professional AI-native workflows, the effectiveness of an agent is rarely det
 
 ### Foundational Concepts
 - **[Core Concepts](./core-concepts.md):** What is context engineering, why it absorbs prompt engineering, and the components of a context payload.
+- **[Context Hydration](./context-hydration.md):** The discipline of managing project state, layers of hydration, and the "Map" vs. "Guts" approach.
 - **[Evolution and History](./evolution-and-history.md):** The origin of the term, thematic blocks, and its role in the SDLC.
 - **[Implementation Patterns](./implementation-patterns.md):** How to make projects "legible" via Architectural Guardrails, Session State (GEMINI.md), and the **PRP Workflow**.
 - **[Challenges and Bottlenecks](./challenges.md):** Understanding Context Rot, "Lost in the Middle," Context Drift, and Tool Confusion.
